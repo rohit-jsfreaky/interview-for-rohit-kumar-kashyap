@@ -53,6 +53,8 @@
   --color-success-status-text: #03543f;
   --color-upcoming-status-bg: #fef3c7;
   --color-upcoming-status-text: #92400f;
+
+  --color-filter-text: #4b5563;
 }
 
 :root {
