@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { getLaunches } from "./services/launches";
+import type { Launch } from "./types/launch";
+import LaunchTable from "./components/table/LaunchTable";
+import Filters from "./components/Filters/Filters";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [launches, setLaunches] = useState<Launch[] | null>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleFetchLaunches = async () => {
+    setLoading(true);
+    const { data, success, error } = await getLaunches({
+      page: 1,
+      limit: 12,
+    });
+
+    if (!success || !data) {
+      console.error(error);
+      setLoading(false);
+      return;
+    }
+
+    setLaunches(data.docs);
+    setLoading(false);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen text-white">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-4">
+            SpaceX Launches
+          </h1>
+          <button
+            onClick={handleFetchLaunches}
+            disabled={loading}
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+          >
+            {loading ? "Loading..." : "Fetch Launches"}
+          </button>
+        </div>
 
-export default App
+        <Filters />
+        {/* Launch Table */}
+        <LaunchTable launches={launches} loading={loading} />
+      </div>
+    </div>
+  );
+};
+
+export default App;
