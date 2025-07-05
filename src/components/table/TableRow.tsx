@@ -5,18 +5,38 @@ interface TableRowProps {
   launch: Launch;
   index: number;
   columns: TableColumn[];
-  renderCell: (launch: Launch, columnKey: string, index: number) => React.ReactNode;
+  renderCell: (
+    launch: Launch,
+    columnKey: string,
+    index: number
+  ) => React.ReactNode;
+  onRowClick?: (launch: Launch) => void;
 }
 
-const TableRow = ({ launch, index, columns, renderCell }: TableRowProps) => {
+const TableRow = ({
+  launch,
+  index,
+  columns,
+  renderCell,
+  onRowClick,
+}: TableRowProps) => {
+  const handleRowClick = () => {
+    if (onRowClick) {
+      onRowClick(launch);
+    }
+  };
+
   return (
     <tr
-      className="hover:bg-gray-100 transition-colors duration-150"
+      className="hover:bg-gray-100 transition-colors duration-150 cursor-pointer"
+      onClick={handleRowClick}
     >
       {columns.map((column) => (
         <td
           key={column.key}
-          className={`px-6 py-4 whitespace-nowrap text-sm text-table-data-text ${column.width || ''}`}
+          className={`px-6 py-4 whitespace-nowrap text-sm text-table-data-text ${
+            column.width || ""
+          }`}
         >
           {renderCell(launch, column.key, index)}
         </td>

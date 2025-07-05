@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getLaunches } from "./services/launches";
+import {
+  getLaunchDetail,
+  getLaunches,
+  getLaunchObject,
+} from "./services/launches";
 import type { Launch } from "./types/launch";
 import LaunchTable from "./components/table/LaunchTable";
 import Filters from "./components/Filters/Filters";
@@ -8,12 +12,16 @@ import { getQuery } from "./services/getQuery";
 import PaginationComponent from "./components/Pagination/Pagination";
 import PaginationInfo from "./components/Pagination/PaginationInfo";
 import { handleSetPaginationData } from "./services/pagination";
+import DetailsDialog from "./components/Detail/DetailsDialog";
 
 const App = () => {
   const [launches, setLaunches] = useState<Launch[] | null>([]);
   const [loading, setLoading] = useState(false);
   const [totalDocs, setTotalDocs] = useState(0);
   const [limit, setLimit] = useState(12);
+  const [launchDetail, setLaunchDetail] = useState<any>(null);
+  const [launchDetailLoading, setLaunchDetailLoading] = useState(false);
+  const [launchDialogOpen, setLaunchDialogOpen] = useState(false);
 
   const [paginationData, setPaginationData] = useState({
     totalPages: 0,
@@ -73,11 +81,33 @@ const App = () => {
     handleFetchLaunches(responseQuery, newPage);
   };
 
+  const handleRowClick = async (launch: Launch) => {
+    console.log("Launch ID:", launch.id);
+    setLaunchDialogOpen(true);
+    setLaunchDetailLoading(true);
+
+    const { data, success, error } = await getLaunchDetail(launch.id);
+
+    if (!success || !data) {
+      console.error(error);
+      setLaunchDetailLoading(false);
+      return;
+    }
+
+    const LaunchObject = getLaunchObject(data);
+    setLaunchDetail(LaunchObject);
+    setLaunchDetailLoading(false);
+  };
+
   return (
     <div className="min-h-screen text-white">
       <div className="container mx-auto px-4 py-8">
         <Filters />
-        <LaunchTable launches={launches} loading={loading} />
+        <LaunchTable
+          launches={launches}
+          loading={loading}
+          onRowClick={handleRowClick}
+        />
 
         <PaginationInfo
           paginationData={paginationData}
@@ -88,6 +118,13 @@ const App = () => {
         <PaginationComponent
           paginationData={paginationData}
           onPageChange={handlePageChange}
+        />
+
+        <DetailsDialog
+          isOpen={launchDialogOpen}
+          launchDetail={launchDetail}
+          loading={launchDetailLoading}
+          setIsOpen={setLaunchDialogOpen}
         />
       </div>
     </div>

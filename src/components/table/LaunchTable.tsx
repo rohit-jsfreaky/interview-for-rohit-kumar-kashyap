@@ -12,9 +12,10 @@ import { renderLaunchCell } from "../../utils/launchTableRenderers";
 interface LaunchTableProps {
   launches: Launch[] | null;
   loading: boolean;
+  onRowClick?: (launch: Launch) => void;
 }
 
-const LaunchTable = ({ launches, loading }: LaunchTableProps) => {
+const LaunchTable = ({ launches, loading, onRowClick }: LaunchTableProps) => {
   const renderTableBody = () => {
     if (loading) {
       return Array.from({ length: 12 }).map((_, index) => (
@@ -42,6 +43,7 @@ const LaunchTable = ({ launches, loading }: LaunchTableProps) => {
         index={index}
         columns={LAUNCH_TABLE_COLUMNS}
         renderCell={renderLaunchCell}
+        onRowClick={onRowClick}
       />
     ));
   };
