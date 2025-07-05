@@ -3,8 +3,9 @@ import type { ApiResponse } from "@/types/api";
 import { axiosInstance } from "./axiosInstance";
 
 export const getLaunches = async ({
+  query,
   page,
-  limit=12,
+  limit = 12,
 }: LaunchQueryParams): Promise<
   ApiResponse<{
     docs: Launch[];
@@ -21,7 +22,7 @@ export const getLaunches = async ({
 > => {
   try {
     const response = await axiosInstance.post("/launches/query", {
-      query: {},
+      query: query || {},
       options: {
         limit,
         page,

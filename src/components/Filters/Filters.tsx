@@ -6,15 +6,19 @@ import { useFilters } from "../../contexts/FilterContext";
 
 const Filters = () => {
   const [isDateDialogOpen, setIsDateDialogOpen] = useState(false);
-  const { filters, presetLabel, updateDateRange, updateLaunchStatus, updatePresetLabel } = useFilters();
+  const {
+    filters,
+    presetLabel,
+    updateDateRange,
+    updateLaunchStatus,
+    updatePresetLabel,
+  } = useFilters();
 
   const formatDateRange = () => {
-    // If we have a preset label, show it
     if (presetLabel) {
       return presetLabel;
     }
 
-    // Otherwise, show the custom date range
     if (!filters.dateRange.startDate && !filters.dateRange.endDate) {
       return "Select Date Range";
     }
@@ -33,7 +37,6 @@ const Filters = () => {
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between space-x-4">
-        {/* Date Range Filter */}
         <Button
           variant="outline"
           onClick={() => setIsDateDialogOpen(true)}
@@ -68,14 +71,11 @@ const Filters = () => {
           </svg>
         </Button>
 
-        {/* Launch Status Filter */}
         <LaunchStatusDropdown
           selectedStatus={filters.launchStatus}
           onStatusChange={updateLaunchStatus}
         />
       </div>
-
-      {/* Date Range Dialog */}
       <DateRangeDialog
         open={isDateDialogOpen}
         onOpenChange={setIsDateDialogOpen}

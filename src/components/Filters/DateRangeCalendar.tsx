@@ -19,10 +19,8 @@ const DateRangeCalendar = ({
 
   const handleDateClick = (date: Date) => {
     if (!dateRange.startDate || (dateRange.startDate && dateRange.endDate)) {
-      // Start new selection
       onDateRangeChange({ startDate: date, endDate: null });
     } else {
-      // Complete the range
       if (date >= dateRange.startDate) {
         onDateRangeChange({ ...dateRange, endDate: date });
       } else {
@@ -55,12 +53,10 @@ const DateRangeCalendar = ({
 
     const days = [];
 
-    // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
 
-    // Add days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(new Date(year, month, day));
     }
@@ -144,7 +140,6 @@ const DateRangeCalendar = ({
     side: "left" | "right";
   }) => (
     <div className="flex-1">
-      {/* Month/Year Header */}
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => navigateMonth("prev", side)}
@@ -166,7 +161,6 @@ const DateRangeCalendar = ({
         </button>
 
         <div className="flex items-center space-x-4">
-          {/* Month Selector */}
           <div className="flex flex-row items-center">
             <span className="text-sm font-medium px-2 py-1 min-w-[80px] text-center">
               {months[date.getMonth()]}
@@ -210,8 +204,6 @@ const DateRangeCalendar = ({
               </button>
             </div>
           </div>
-
-          {/* Year Selector */}
           <div className="flex items-center">
             <span className="text-sm font-medium px-2 py-1 min-w-[60px] text-center">
               {date.getFullYear()}
@@ -277,8 +269,6 @@ const DateRangeCalendar = ({
           </svg>
         </button>
       </div>
-
-      {/* Days of Week Header */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
           <div
@@ -289,8 +279,6 @@ const DateRangeCalendar = ({
           </div>
         ))}
       </div>
-
-      {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-1">
         {getDaysInMonth(date).map((day, index) => (
           <div key={index} className="aspect-square">

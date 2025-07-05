@@ -23,6 +23,7 @@ export interface Launch {
 }
 
 export interface LaunchQueryParams {
+  query?: Record<string, unknown>;
   page?: number;
   limit?: number;
 }

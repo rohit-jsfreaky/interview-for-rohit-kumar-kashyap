@@ -34,12 +34,10 @@ const DateRangeDialog = ({
     setTempDateRange(range);
     setSelectedPreset(preset.label);
 
-    // Auto-apply preset and close dialog
     onDateRangeChange(range);
     onPresetChange(preset.label);
     onOpenChange(false);
 
-    // Console log the applied filters
     console.log("Applied Date Filter (Preset):", {
       preset: preset.label,
       dateRange: range,
@@ -50,7 +48,7 @@ const DateRangeDialog = ({
 
   const handleCustomDateChange = (range: DateRange) => {
     setTempDateRange(range);
-    setSelectedPreset(null); // Clear preset when manually selecting dates
+    setSelectedPreset(null);
   };
 
   const handleApply = () => {
@@ -58,7 +56,6 @@ const DateRangeDialog = ({
     onPresetChange(selectedPreset);
     onOpenChange(false);
 
-    // Console log the applied filters
     console.log("Applied Date Filter (Custom):", {
       preset: selectedPreset,
       dateRange: tempDateRange,
@@ -71,7 +68,6 @@ const DateRangeDialog = ({
     setTempDateRange({ startDate: null, endDate: null });
     setSelectedPreset(null);
 
-    // Auto-apply clear and close dialog
     onDateRangeChange({ startDate: null, endDate: null });
     onPresetChange(null);
     onOpenChange(false);
@@ -87,7 +83,6 @@ const DateRangeDialog = ({
         </DialogHeader>
 
         <div className="flex">
-          {/* Preset Options */}
           <div className="w-48 pr-6 border-r">
             <div className="space-y-2">
               {DATE_PRESETS.map((preset) => (
@@ -111,8 +106,6 @@ const DateRangeDialog = ({
               </button>
             </div>
           </div>
-
-          {/* Calendar */}
           <div className="flex-1 pl-6">
             <DateRangeCalendar
               dateRange={tempDateRange}
