@@ -36,14 +36,14 @@ const Filters = () => {
 
   return (
     <div className="mb-6">
-      <div className="flex items-center justify-between space-x-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 sm:space-x-4">
         <Button
           variant="outline"
           onClick={() => setIsDateDialogOpen(true)}
-          className="text-filter-text font-medium"
+          className="text-filter-text font-medium w-full sm:w-auto justify-start sm:justify-center"
         >
           <svg
-            className="w-4 h-4 mr-2"
+            className="w-4 h-4 mr-2 flex-shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -55,9 +55,9 @@ const Filters = () => {
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          {formatDateRange()}
+          <span className="truncate">{formatDateRange()}</span>
           <svg
-            className="w-4 h-4 ml-2"
+            className="w-4 h-4 ml-2 flex-shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -71,10 +71,12 @@ const Filters = () => {
           </svg>
         </Button>
 
-        <LaunchStatusDropdown
-          selectedStatus={filters.launchStatus}
-          onStatusChange={updateLaunchStatus}
-        />
+        <div className="w-full sm:w-auto">
+          <LaunchStatusDropdown
+            selectedStatus={filters.launchStatus}
+            onStatusChange={updateLaunchStatus}
+          />
+        </div>
       </div>
       <DateRangeDialog
         open={isDateDialogOpen}

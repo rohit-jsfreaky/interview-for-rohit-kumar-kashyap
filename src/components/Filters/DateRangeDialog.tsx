@@ -77,14 +77,17 @@ const DateRangeDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[50vw] max-w-none">
+      <DialogContent className="w-[95vw] max-w-4xl sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Select Date Range</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">
+            Select Date Range
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="flex">
-          <div className="w-48 pr-6 border-r">
-            <div className="space-y-2">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Preset Options */}
+          <div className="w-full lg:w-48 lg:pr-6 lg:border-r">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 lg:space-y-2">
               {DATE_PRESETS.map((preset) => (
                 <button
                   key={preset.value}
@@ -106,7 +109,9 @@ const DateRangeDialog = ({
               </button>
             </div>
           </div>
-          <div className="flex-1 pl-6">
+
+          {/* Calendar */}
+          <div className="flex-1 lg:pl-6">
             <DateRangeCalendar
               dateRange={tempDateRange}
               onDateRangeChange={handleCustomDateChange}
@@ -114,11 +119,17 @@ const DateRangeDialog = ({
           </div>
         </div>
 
-        <div className="flex justify-end space-x-2 mt-6">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+        <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-0 sm:space-x-2 mt-6">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="w-full sm:w-auto"
+          >
             Cancel
           </Button>
-          <Button onClick={handleApply}>Apply</Button>
+          <Button onClick={handleApply} className="w-full sm:w-auto">
+            Apply
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

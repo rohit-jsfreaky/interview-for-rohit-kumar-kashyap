@@ -139,11 +139,12 @@ const DateRangeCalendar = ({
     date: Date;
     side: "left" | "right";
   }) => (
-    <div className="flex-1">
-      <div className="flex items-center justify-between mb-4">
+    <div className="flex-1 min-w-0">
+      {/* Month/Year Header */}
+      <div className="flex items-center justify-between mb-4 px-1">
         <button
           onClick={() => navigateMonth("prev", side)}
-          className="p-1 hover:bg-gray-100 rounded"
+          className="p-2 hover:bg-gray-100 rounded-full flex-shrink-0"
         >
           <svg
             className="w-4 h-4"
@@ -160,12 +161,13 @@ const DateRangeCalendar = ({
           </svg>
         </button>
 
-        <div className="flex items-center space-x-4">
-          <div className="flex flex-row items-center">
-            <span className="text-sm font-medium px-2 py-1 min-w-[80px] text-center">
+        <div className="flex items-center space-x-2 sm:space-x-4 flex-1 justify-center">
+          {/* Month Selector */}
+          <div className="flex items-center">
+            <span className="text-xs sm:text-sm font-medium px-1 sm:px-2 py-1 min-w-[60px] sm:min-w-[80px] text-center">
               {months[date.getMonth()]}
             </span>
-            <div className="flex flex-col">
+            <div className="flex flex-col ml-1">
               <button
                 onClick={() => changeMonth("up", side)}
                 className="p-1 hover:bg-gray-100 rounded"
@@ -204,12 +206,13 @@ const DateRangeCalendar = ({
               </button>
             </div>
           </div>
+
+          {/* Year Selector */}
           <div className="flex items-center">
-            <span className="text-sm font-medium px-2 py-1 min-w-[60px] text-center">
+            <span className="text-xs sm:text-sm font-medium px-1 sm:px-2 py-1 min-w-[50px] sm:min-w-[60px] text-center">
               {date.getFullYear()}
             </span>
-
-            <div className="flex flex-col">
+            <div className="flex flex-col ml-1">
               <button
                 onClick={() => changeYear("up", side)}
                 className="p-1 hover:bg-gray-100 rounded"
@@ -252,7 +255,7 @@ const DateRangeCalendar = ({
 
         <button
           onClick={() => navigateMonth("next", side)}
-          className="p-1 hover:bg-gray-100 rounded"
+          className="p-2 hover:bg-gray-100 rounded-full flex-shrink-0"
         >
           <svg
             className="w-4 h-4"
@@ -269,23 +272,27 @@ const DateRangeCalendar = ({
           </svg>
         </button>
       </div>
+
+      {/* Days of Week Header */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
           <div
             key={day}
-            className="text-center text-xs text-gray-500 py-2 font-medium"
+            className="text-center text-xs text-gray-500 py-1 sm:py-2 font-medium"
           >
             {day}
           </div>
         ))}
       </div>
+
+      {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-1">
         {getDaysInMonth(date).map((day, index) => (
           <div key={index} className="aspect-square">
             {day && (
               <button
                 onClick={() => handleDateClick(day)}
-                className={`w-full h-full text-sm rounded-md flex items-center justify-center font-medium transition-colors ${
+                className={`w-full h-full text-xs sm:text-sm rounded-md flex items-center justify-center font-medium transition-colors ${
                   isDateSelected(day)
                     ? "bg-blue-500 text-white"
                     : isDateInRange(day)
@@ -303,9 +310,14 @@ const DateRangeCalendar = ({
   );
 
   return (
-    <div className="flex space-x-8">
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
       <CalendarMonth date={leftMonth} side="left" />
-      <CalendarMonth date={rightMonth} side="right" />
+      <div className="lg:hidden">
+        <CalendarMonth date={rightMonth} side="right" />
+      </div>
+      <div className="hidden lg:block">
+        <CalendarMonth date={rightMonth} side="right" />
+      </div>
     </div>
   );
 };

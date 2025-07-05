@@ -49,7 +49,7 @@ const LaunchTable = ({ launches, loading, onRowClick }: LaunchTableProps) => {
   };
 
   return (
-    <div className="mt-12">
+    <div className="mt-5">
       <div className=" rounded-lg overflow-hidden shadow-lg border border-table-border">
         <div className="overflow-x-auto">
           <table className="min-w-full ">

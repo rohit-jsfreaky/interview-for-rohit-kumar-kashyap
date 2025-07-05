@@ -38,7 +38,7 @@ const DetailsDialog = ({
   if (loading) {
     return (
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="w-[35vw]">
+        <DialogContent className="w-[95vw] max-w-2xl sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] max-h-[90vh] overflow-y-auto">
           <DetailsDialogSkeleton />
         </DialogContent>
       </Dialog>
@@ -75,9 +75,10 @@ const DetailsDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-[35vw]">
-        <div className="flex items-start gap-4 mb-6">
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+      <DialogContent className="w-[95vw] max-w-2xl sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] max-h-[90vh] overflow-y-auto">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row items-start gap-4 mb-6">
+          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
             {launchDetail.image ? (
               <img
                 src={launchDetail.image}
@@ -88,19 +89,22 @@ const DetailsDialog = ({
               <div className="w-full h-full bg-gray-300 rounded-lg"></div>
             )}
           </div>
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-4">
-              {launchDetail.name}{" "}
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">
+                {launchDetail.name}
+              </h2>
               <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusClass(
+                className={`px-3 py-1 rounded-full text-sm font-medium w-fit ${getStatusClass(
                   launchDetail.status
                 )}`}
               >
                 {launchDetail.status}
               </span>
-            </h2>
-            <p className="text-gray-600 mb-2">{launchDetail.rocketName}</p>
-
+            </div>
+            <p className="text-gray-600 mb-2 truncate">
+              {launchDetail.rocketName}
+            </p>
             <div className="flex items-center gap-2">
               {launchDetail.articleLink && (
                 <a
@@ -112,6 +116,7 @@ const DetailsDialog = ({
                   <SiNasa className="w-4 h-4 text-gray-500" />
                 </a>
               )}
+
               {launchDetail.youtubeLink && (
                 <a
                   href={launchDetail.youtubeLink}
@@ -138,7 +143,7 @@ const DetailsDialog = ({
 
         {/* Description */}
         <div className="mb-6">
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
             {launchDetail.details ||
               "No description available for this launch."}
             {launchDetail.wikipediaLink && (
@@ -155,67 +160,95 @@ const DetailsDialog = ({
         </div>
 
         {/* Details Grid */}
-        <div className="space-y-4">
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Flight Number</span>
-            <span className="text-gray-900">{launchDetail.flightNumber}</span>
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Flight Number
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
+              {launchDetail.flightNumber}
+            </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Mission Name</span>
-            <span className="text-gray-900">{launchDetail.missionName}</span>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Mission Name
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0 truncate">
+              {launchDetail.missionName}
+            </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Rocket Type</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Rocket Type
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {launchDetail.rocketType || "Unknown"}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Rocket Name</span>
-            <span className="text-gray-900">{launchDetail.rocketName}</span>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Rocket Name
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0 truncate">
+              {launchDetail.rocketName}
+            </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Manufacturer</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Manufacturer
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {launchDetail.manufacturer || "SpaceX"}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Nationality</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Nationality
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {launchDetail.nationality || "SpaceX"}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Launch Date</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Launch Date
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {formatLaunchDate(launchDetail.launchDate)}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Payload Type</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Payload Type
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {launchDetail.payloadType || "Unknown"}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <span className="text-gray-600 font-medium">Orbit</span>
-            <span className="text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-200">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Orbit
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0">
               {launchDetail.orbit || "Unknown"}
             </span>
           </div>
 
-          <div className="flex justify-between items-center py-2">
-            <span className="text-gray-600 font-medium">Launch Site</span>
-            <span className="text-gray-900">{launchDetail.launchSite}</span>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2">
+            <span className="text-gray-600 font-medium text-sm sm:text-base">
+              Launch Site
+            </span>
+            <span className="text-gray-900 text-sm sm:text-base mt-1 sm:mt-0 truncate">
+              {launchDetail.launchSite}
+            </span>
           </div>
         </div>
       </DialogContent>

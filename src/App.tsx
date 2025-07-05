@@ -13,6 +13,7 @@ import PaginationComponent from "./components/Pagination/Pagination";
 import PaginationInfo from "./components/Pagination/PaginationInfo";
 import { handleSetPaginationData } from "./services/pagination";
 import DetailsDialog from "./components/Detail/DetailsDialog";
+import Navbar from "./components/Layout/Navbar";
 
 const App = () => {
   const [launches, setLaunches] = useState<Launch[] | null>([]);
@@ -100,8 +101,9 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen text-white">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen text-white mb-10">
+      <Navbar />
+      <div className="container mx-auto px-4 py-4">
         <Filters />
         <LaunchTable
           launches={launches}
